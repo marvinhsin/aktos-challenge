@@ -35,7 +35,7 @@ class AccountViewAPITestCase(TestCase):
             client_id = "1", 
             balance = 1000.0, 
             status = "ACTIVE", 
-            consumer_name = "John Doe",
+            consumer_name = "john doe",
             address = "123 abc st, Berkeley, CA94700",
             ssn = "384-98-6418",
         )
@@ -43,37 +43,38 @@ class AccountViewAPITestCase(TestCase):
             client_id = "2", 
             balance = 500.0, 
             status = "INACTIVE", 
-            consumer_name = "Jane Doe",
+            consumer_name = "jane doe",
             address = "123 dfc st, Berkeley, CA94700",
             ssn = "384-71-6598",
         )
+        self.client = APIClient()
 
     def test_get_queryset(self):
         # Test filtering by min_balance
         url = reverse("account-list") + "?min_balance=600.0"
         client = APIClient()
-        response = client.get(url)
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["client_id"], self.account1.client_id)
+        self.assertEqual(response.data["count"], 1)
+        self.assertEqual(response.data["results"][0]["client_id"], self.account1.client_id)
 
         # Test filtering by max_balance
         url = reverse("account-list") + "?max_balance=600.0"
-        response = client.get(url)
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["client_id"], self.account2.client_id)
+        self.assertEqual(response.data["count"], 1)
+        self.assertEqual(response.data["results"][0]["client_id"], self.account2.client_id)
 
         # Test filtering by status
-        url = reverse("account-list") + "?status=active"
-        response = client.get(url)
+        url = reverse("account-list") + "?status=ACTIVE"
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["client_id"], self.account1.client_id)
+        self.assertEqual(response.data["count"], 1)
+        self.assertEqual(response.data["results"][0]["client_id"], self.account1.client_id)
 
         # Test filtering by consumer_name
-        url = reverse("account-list") + "?consumer_name=john doe"
-        response = client.get(url)
+        url = reverse("account-list") + "?consumer_name=John Doe"
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["client_id"], self.account1.client_id)
+        self.assertEqual(response.data["count"], 1)
+        self.assertEqual(response.data["results"][0]["client_id"], self.account1.client_id)
