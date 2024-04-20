@@ -1,0 +1,57 @@
+<!-- upload_csv.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV</title>
+</head>
+<body>
+    <h2>Upload CSV File</h2>
+    <input type="file" id="csv-file-input" accept=".csv">
+    <button id="upload-button">Upload</button>
+    <div id="upload-status"></div>
+
+    <script>
+        document.getElementById('upload-button').addEventListener('click', function() {
+            var fileInput = document.getElementById('csv-file-input');
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append('file', file);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/load_csv/');
+            var csrfToken = getCSRFToken();
+            if (csrfToken) {
+                xhr.setRequestHeader('X-CSRFToken', csrfToken);
+            }
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    alert('CSV upload succeeded!');
+                    window.location.href = '/accounts';
+                    document.getElementById('upload-status').innerText = 'CSV file processed successfully';
+                } else {
+                    document.getElementById('upload-status').innerText = 'Error: ' + xhr.status;
+                }
+            };
+            xhr.send(formData);
+        });
+
+        // Function to get CSRF token from cookie
+        function getCSRFToken() {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, 10) === 'csrftoken=') {
+                        cookieValue = decodeURIComponent(cookie.substring(10));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>
