@@ -3,23 +3,27 @@ from .models import Account
 from .serializers import AccountSerializer
 from rest_framework.pagination import PageNumberPagination
 
-
+# Setup up pagination for AccountView
 class CustomPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100
 
-# Create your views here.
+
+# Create view for Account
 class AccountView(generics.ListAPIView):
     serializer_class = AccountSerializer
     pagination_class = CustomPagination
 
+    # Create API that queries database by parameters
     def get_queryset(self):
+        # Retrieve parameters from URL
         min_balance = self.request.query_params.get('min_balance')
         max_balance = self.request.query_params.get('max_balance')
         status = self.request.query_params.get('status')
         consumer_name = self.request.query_params.get('consumer_name')
         
+        # Filter results according to optional parameters
         queryset = Account.objects.all()
         if min_balance:
             try:

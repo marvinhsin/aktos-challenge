@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
+# Create Test for rendering frontend view
 class IndexViewTestCase(TestCase):
     def test_index_view(self):
         response = self.client.get(reverse('index'))

@@ -8,6 +8,7 @@ import csv
 def index(request, *args, **kwargs):
     return render(request, 'load_csv/index.html')
 
+# Parse CSV file into models
 def load_csv(request):
     try:
         if request.method == 'POST' and request.FILES['file']:
@@ -24,8 +25,9 @@ def load_csv(request):
                     address = row['consumer address'],
                     ssn = row['ssn'],
                 )
-
             
             return HttpResponse('<h1>CSV upload succeed!</h1>')
     except:
             return HttpResponse('<h1>No file uploaded or invalid request method</h1>')
+
+# NOTE: Create a column for agency id if modeling many agency and many clients

@@ -3,7 +3,7 @@ from rest_framework.test import APIClient
 from .views import Account
 from django.urls import reverse
 
-# Create your tests here.
+# Create test suite for Account model
 class AccountTestCase(TestCase):
     def setUp(self):
         Account.objects.create(
@@ -14,23 +14,24 @@ class AccountTestCase(TestCase):
             address = '123 abc st, Berkeley, CA94700',
             ssn = '384-98-6598',
         )
-    
+
+    # Test model creation and retrieval
     def test_model_creation(self):
         obj = Account.objects.get(client_id = '3h3j4h2ot6t5j342')
         self.assertEqual(obj.client_id,'3h3j4h2ot6t5j342')
 
 
-
+# Create test suite for AccountView class
 class AccountViewTestCase(TestCase):
+    # Testing AccountView creation and return success status code
     def test_view_creation(self):
         response = self.client.get(reverse('account-list'))
         self.assertEqual(response.status_code, 200)
 
 
-
+# Create test suite for data query API
 class AccountViewAPITestCase(TestCase):
     def setUp(self):
-        # Create test accounts
         self.account1 = Account.objects.create(
             client_id = "1", 
             balance = 1000.0, 
@@ -49,6 +50,7 @@ class AccountViewAPITestCase(TestCase):
         )
         self.client = APIClient()
 
+    # Test API with query parameters 
     def test_get_queryset(self):
         # Test filtering by min_balance
         url = reverse("account-list") + "?min_balance=600.0"
