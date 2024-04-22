@@ -7,20 +7,27 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Account',
+            name="Account",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('client_id', models.CharField(max_length=100)),
-                ('balance', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('status', models.CharField(max_length=100)),
-                ('consumer_name', models.CharField(max_length=100)),
-                ('address', models.CharField(max_length=100)),
-                ('ssn', models.CharField(max_length=11)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("client_id", models.CharField(max_length=100)),
+                ("balance", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("status", models.CharField(max_length=100)),
+                ("consumer_name", models.CharField(max_length=100)),
+                ("address", models.CharField(max_length=100)),
+                ("ssn", models.CharField(max_length=11)),
             ],
         ),
     ]
