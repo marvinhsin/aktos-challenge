@@ -1,5 +1,8 @@
 # Aktos Full Stack Django App Challenge
 
+## Demo
+https://www.loom.com/share/79805951d2a14b089fbec08471d1fae9?sid=ac483088-34b9-48fa-96b8-ccced47f29bb
+
 ## Background
 
 This Django application is designed to facilitate a collection agency's workflow by allowing them to ingest data files provided by their clients. The data files are in CSV format and contain account information regarding consumers and the debts they owe to a single client.
