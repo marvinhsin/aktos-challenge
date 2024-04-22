@@ -26,6 +26,11 @@ After ingestion, the system provides APIs for querying account information from 
 
 Upon querying the database, the system renders a view containing the queried objects, which are paginated for easy navigation. Each model in the application is thoroughly tested to ensure reliability and accuracy.
 
+## Potential Improvement
+
+1. UI design can be improved with React for better experience.
+2. Columns can be indexed for faster lookup performance.
+
 ## Usage
 
 1. Clone the repository.
